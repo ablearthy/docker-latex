@@ -33,4 +33,5 @@ RUN apt install --no-install-recommends --reinstall -y \
     wget https://github.com/aliftype/xits/releases/download/v1.302/XITS-1.302.zip && \
     unzip -o XITS-1.302.zip -d /usr/share/fonts/ && \
     rm -f XITS-1.302.zip && \
+    rm -rf /usr/share/fonts/XITS-1.302/webfonts && \
     fc-cache -f -v
