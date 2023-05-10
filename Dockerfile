@@ -15,23 +15,22 @@ RUN apt update && \
         git \
         make \
         apt-transport-https \
-        unzip && \
-    apt install --no-install-recommends -y \
+        unzip \
         texlive-base \
         texlive-latex-extra \
         texlive-xetex \
         texlive-lang-cyrillic \
         texlive-science \
         texlive-latex-recommended \
-        latexmk \
+        latexmk
+
+RUN apt install --no-install-recommends -y \
         libcerf-dev \
-        gfortran \
         libwebp-dev \
-        adwaita-icon-theme-full
-
-RUN apt install --no-install-recommends -y automake autotools-dev
-
-RUN git clone -b branch-6-0-stable --single-branch git://git.code.sf.net/p/gnuplot/gnuplot-main gnuplot-gnuplot-main && \
+        gfortran \
+        automake \
+        autotools-dev && \
+    git clone -b branch-6-0-stable --single-branch git://git.code.sf.net/p/gnuplot/gnuplot-main gnuplot-gnuplot-main && \
     cd gnuplot-gnuplot-main && \
     git checkout d165a028c9446e57a3dc1ff9c8d1056e6ace519e && \
     ./prepare && \
