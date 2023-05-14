@@ -16,6 +16,7 @@ RUN apt update && \
         make \
         apt-transport-https \
         unzip \
+        asymptote \
         texlive-base \
         texlive-latex-extra \
         texlive-xetex \
