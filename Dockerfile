@@ -1,4 +1,4 @@
-FROM ubuntu:23.04
+FROM docker.io/library/debian:13-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
@@ -6,6 +6,8 @@ ENV WORK_DIR /document
 
 VOLUME $WORK_DIR
 WORKDIR $WORK_DIR
+
+COPY debian.sources /etc/apt/sources.list.d/debian.sources
 
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
 
@@ -36,15 +38,22 @@ RUN apt install --no-install-recommends -y \
     ./prepare && \
     ./configure && \
     make -j && \
-    make install
+    make install && \
+    rm -rf gnuplot-gnuplot-main
 
+
+RUN apt install --no-install-recommends --reinstall -y ttf-mscorefonts-installer
 
 RUN apt install --no-install-recommends --reinstall -y \
-        ttf-mscorefonts-installer \
         fonts-freefont-ttf \
         fontconfig && \
     wget https://github.com/aliftype/xits/releases/download/v1.302/XITS-1.302.zip && \
     unzip -o XITS-1.302.zip -d /usr/share/fonts/ && \
     rm -f XITS-1.302.zip && \
     rm -rf /usr/share/fonts/XITS-1.302/webfonts && \
+    fc-cache -f -v
+
+RUN wget https://github.com/be5invis/Iosevka/releases/download/v33.3.0/PkgTTC-Iosevka-33.3.0.zip && \
+    unzip -o PkgTTC-Iosevka-33.3.0.zip -d /usr/share/fonts/ && \
+    rm -f PkgTTC-Iosevka-33.3.0.zip && \
     fc-cache -f -v
